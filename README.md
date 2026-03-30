@@ -82,6 +82,9 @@ django-login-dashboard/
 ---
 
 ## 👨‍💻 Author
+<img width="1920" height="1080" alt="Screenshot 2026-03-30 171933" src="https://github.com/user-attachments/assets/4ec033aa-2e55-40eb-bced-b72b91db958d" />
+<img width="1920" height="1080" alt="Screenshot 2026-03-30 170018" src="https://github.com/user-attachments/assets/f4a38cc9-48b3-461f-b2f4-d64c8417e98e" />
+
 
 **Gowtham Krishnan**  
 [![GitHub](https://img.shields.io/badge/GitHub-Gytgowtham-black?style=flat&logo=github)](https://github.com/Gytgowtham)
