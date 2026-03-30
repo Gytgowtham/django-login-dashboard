@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login | MyApp</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+    <style>
+        :root {
+            --green: #00c853;
+            --green-dark: #009624;
+            --green-light: #b9f6ca;
+            --black: #0a0a0a;
+            --card-bg: #111111;
+            --muted: #888;
+        }
+ 
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+ 
+        body {
+            background-color: var(--black);
+            font-family: 'DM Sans', sans-serif;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            position: relative;
+        }
+ 
+        /* Animated background */
+        body::before {
+            content: '';
+            position: fixed;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(ellipse at 20% 50%, rgba(0,200,83,0.08) 0%, transparent 50%),
+                        radial-gradient(ellipse at 80% 20%, rgba(0,200,83,0.05) 0%, transparent 40%);
+            animation: bgPulse 8s ease-in-out infinite alternate;
+            pointer-events: none;
+        }
+ 
+        @keyframes bgPulse {
+            0% { transform: scale(1) rotate(0deg); }
+            100% { transform: scale(1.1) rotate(3deg); }
+        }
+ 
+        /* Grid lines background */
+        body::after {
+            content: '';
+            position: fixed;
+            inset: 0;
+            background-image:
+                linear-gradient(rgba(0,200,83,0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0,200,83,0.03) 1px, transparent 1px);
+            background-size: 50px 50px;
+            pointer-events: none;
+        }
+ 
+        .login-wrapper {
+            width: 100%;
+            max-width: 460px;
+            padding: 1rem;
+            position: relative;
+            z-index: 10;
+            animation: slideUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) both;
+        }
+ 
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+ 
+        .brand {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+ 
+        .brand-icon {
+            width: 56px;
+            height: 56px;
+            background: var(--green);
+            border-radius: 16px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.6rem;
+            margin-bottom: 1rem;
+            box-shadow: 0 0 30px rgba(0,200,83,0.4);
+            animation: iconGlow 2s ease-in-out infinite alternate;
+        }
+ 
+        @keyframes iconGlow {
+            from { box-shadow: 0 0 20px rgba(0,200,83,0.3); }
+            to { box-shadow: 0 0 40px rgba(0,200,83,0.6); }
+        }
+ 
+        .brand h1 {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 2.2rem;
+            color: #fff;
+            letter-spacing: 3px;
+        }
+ 
+        .brand p {
+            color: var(--muted);
+            font-size: 0.85rem;
+            margin-top: 0.25rem;
+        }
+ 
+        .login-card {
+            background: var(--card-bg);
+            border: 1px solid rgba(255,255,255,0.07);
+            border-radius: 20px;
+            padding: 2.5rem;
+            box-shadow: 0 25px 60px rgba(0,0,0,0.5);
+        }
+ 
+        .login-card h2 {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 1.8rem;
+            color: #fff;
+            letter-spacing: 2px;
+            margin-bottom: 0.25rem;
+        }
+ 
+        .login-card p.subtitle {
+            color: var(--muted);
+            font-size: 0.85rem;
+            margin-bottom: 2rem;
+        }
+ 
+        .form-label {
+            color: rgba(255,255,255,0.7);
+            font-size: 0.8rem;
+            font-weight: 600;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            margin-bottom: 0.5rem;
+        }
+ 
+        .input-group {
+            position: relative;
+        }
+ 
+        .input-icon {
+            position: absolute;
+            left: 14px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--muted);
+            font-size: 1rem;
+            z-index: 5;
+            pointer-events: none;
+        }
+ 
+        .form-control {
+            background: rgba(255,255,255,0.04) !important;
+            border: 1px solid rgba(255,255,255,0.1) !important;
+            border-radius: 10px !important;
+            color: #fff !important;
+            padding: 0.75rem 1rem 0.75rem 2.8rem !important;
+            font-size: 0.95rem;
+            transition: all 0.3s ease;
+            font-family: 'DM Sans', sans-serif;
+        }
+ 
+        .form-control:focus {
+            background: rgba(0,200,83,0.05) !important;
+            border-color: var(--green) !important;
+            box-shadow: 0 0 0 3px rgba(0,200,83,0.1) !important;
+            outline: none !important;
+        }
+ 
+        .form-control::placeholder { color: rgba(255,255,255,0.2) !important; }
+ 
+        /* Django form styling override */
+        .django-form p { margin-bottom: 1.25rem; }
+        .django-form label {
+            display: block;
+            color: rgba(255,255,255,0.7);
+            font-size: 0.8rem;
+            font-weight: 600;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            margin-bottom: 0.5rem;
+        }
+        .django-form input[type="text"],
+        .django-form input[type="password"] {
+            width: 100%;
+            background: rgba(255,255,255,0.04);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 10px;
+            color: #fff;
+            padding: 0.75rem 1rem;
+            font-size: 0.95rem;
+            transition: all 0.3s ease;
+            font-family: 'DM Sans', sans-serif;
+        }
+        .django-form input[type="text"]:focus,
+        .django-form input[type="password"]:focus {
+            background: rgba(0,200,83,0.05);
+            border-color: var(--green);
+            box-shadow: 0 0 0 3px rgba(0,200,83,0.1);
+            outline: none;
+        }
+ 
+        .btn-login {
+            width: 100%;
+            background: var(--green);
+            color: #000;
+            border: none;
+            border-radius: 10px;
+            padding: 0.85rem;
+            font-size: 1rem;
+            font-weight: 700;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            font-family: 'DM Sans', sans-serif;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 0.5rem;
+            position: relative;
+            overflow: hidden;
+        }
+ 
+        .btn-login::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: rgba(255,255,255,0.1);
+            transform: translateX(-100%);
+            transition: transform 0.3s ease;
+        }
+ 
+        .btn-login:hover::before { transform: translateX(0); }
+        .btn-login:hover {
+            background: #00e65c;
+            box-shadow: 0 8px 25px rgba(0,200,83,0.4);
+            transform: translateY(-1px);
+        }
+        .btn-login:active { transform: translateY(0); }
+ 
+        .divider {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin: 1.5rem 0;
+        }
+        .divider::before, .divider::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: rgba(255,255,255,0.07);
+        }
+        .divider span {
+            color: var(--muted);
+            font-size: 0.75rem;
+            letter-spacing: 1px;
+        }
+ 
+        .footer-text {
+            text-align: center;
+            color: var(--muted);
+            font-size: 0.82rem;
+            margin-top: 1.5rem;
+        }
+        .footer-text a {
+            color: var(--green);
+            text-decoration: none;
+            font-weight: 600;
+        }
+        .footer-text a:hover { text-decoration: underline; }
+ 
+        .error-msg {
+            background: rgba(255,50,50,0.1);
+            border: 1px solid rgba(255,50,50,0.2);
+            border-radius: 8px;
+            padding: 0.75rem 1rem;
+            color: #ff6b6b;
+            font-size: 0.85rem;
+            margin-bottom: 1rem;
+        }
+    </style>
+</head>
+<body>
+ 
+<div class="login-wrapper">
+    <div class="brand">
+        <div class="brand-icon">⚡</div>
+        <h1>MyApp</h1>
+        <p>Professional Dashboard Suite</p>
+    </div>
+ 
+    <div class="login-card">
+        <h2>Welcome Back</h2>
+        <p class="subtitle">Sign in to continue to your dashboard</p>
+ 
+        {% if form.errors %}
+        <div class="error-msg">
+            <i class="bi bi-exclamation-circle me-2"></i>Invalid username or password.
+        </div>
+        {% endif %}
+ 
+        <form method="post" class="django-form">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit" class="btn-login">
+                <i class="bi bi-box-arrow-in-right me-2"></i>Sign In
+            </button>
+        </form>
+ 
+        <div class="footer-text">
+            Don't have an account? <a href="#">Register</a>
+        </div>
+    </div>
+</div>
+ 
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
